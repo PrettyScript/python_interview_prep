@@ -130,32 +130,43 @@ Here's how we might implement it:
 5. If the number was not found return -1.
 """
 
-def locate_card(cards, query):
-    # Create a variable 'position' with the value 0
-    position = 0
+# def locate_card(cards, query):
+#     # Create a variable 'position' with the value 0
+#     position = 0
 
-    # set up a loop for repetition
-    while True:
+#     # set up a loop for repetition
+#     while True:
 
-        # Check if element at the current position matches the query    
-        if cards[position] == query:
+#         # Check if element at the current position matches the query    
+#         if cards[position] == query:
 
-            # Answer found! Return and exit...
-            return position
+#             # Answer found! Return and exit...
+#             return position
         
-        # Increment the position 
-        position += 1
+#         # Increment the position 
+#         position += 1
 
-        # Check if we have reached the end of the array
-        if position == len(cards):
+#         # Check if we have reached the end of the array
+#         if position == len(cards):
 
-            # Number not found, return -1
-            return -1
+#             # Number not found, return -1
+#             return -1
 
 # print(locate_card(**test['input']) == test['output'])
 # print(tests)
 
+"""
+This function accounts for if there are no 
+cards in the list
+"""
+def locate_card(cards, query):
+    position = 0
+    while position < len(cards):
+        if cards[position] == query:
+            return position
+        position += 1
+    return -1
+
 # result = 
 result = locate_card(test['input']['cards'], test['input']['query'])
 print(result == test['output'])
-
