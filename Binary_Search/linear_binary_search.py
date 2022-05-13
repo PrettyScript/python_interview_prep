@@ -170,3 +170,8 @@ def locate_card(cards, query):
 # result = 
 result = locate_card(test['input']['cards'], test['input']['query'])
 print(result == test['output'])
+
+"""
+Time complexity: O(N)
+Space complexity: O(1)
+"""
