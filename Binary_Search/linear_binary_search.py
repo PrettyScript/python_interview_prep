@@ -1,3 +1,5 @@
+from jovian.pythondsa import evaluate_test_cases
+
 """
 1. State the problem clearly. Identify the input & output formats.
 2. Come up with some example inputs & outputs. Try to cover all edge cases.
@@ -70,7 +72,7 @@ tests.append({
 tests.append({
     'input': {
         'cards': [3, -1, -9, -127],
-        'query': 127
+        'query': -127
     },
     'output': 3
 })
@@ -105,7 +107,7 @@ tests.append({
 # numbers can repeat in cards
 tests.append({
     'input': {
-        'cards': [8, 8, 6, 6, 6, 6, 3, 2, 2, 2, 0, 0, 0],
+        'cards': [8, 8, 6, 6, 6, 6, 6, 3, 2, 2, 2, 0, 0, 0],
         'query': 3
     },
     'output': 7
@@ -114,7 +116,7 @@ tests.append({
 # query occurs multiple times
 tests.append({
     'input': {
-        'cards': [8, 8, 6, 6, 6, 6, 3, 2, 2, 2, 0, 0, 0],
+        'cards': [8, 8, 6, 6, 6, 6, 6, 6, 3, 2, 2, 2, 0, 0, 0],
         'query': 6
     },
     'output': 2
@@ -159,19 +161,66 @@ Here's how we might implement it:
 This function accounts for if there are no 
 cards in the list
 """
-def locate_card(cards, query):
-    position = 0
-    while position < len(cards):
-        if cards[position] == query:
-            return position
-        position += 1
-    return -1
+# def locate_card(cards, query):
+#     position = 0
+#     while position < len(cards):
+#         if cards[position] == query:
+#             return position
+#         position += 1
+#     return -1
 
-# result = 
-result = locate_card(test['input']['cards'], test['input']['query'])
-print(result == test['output'])
+# # result = 
+# result = locate_card(test['input']['cards'], test['input']['query'])
+# print(result == test['output'])
 
 """
 Time complexity: O(N)
 Space complexity: O(1)
 """
+
+"""
+We will be creating a healper function that will identify multiples in 
+a list
+"""
+
+"""
+Great programmers write baby code, shouldn't have functions 
+with more than 7 lines of code
+"""
+
+def test_location(cards, query, mid):
+    mid_number = cards[mid]
+    print("mid:", mid, ", mid_number:", mid_number)
+
+    if mid_number == query:
+        if mid-1 >= 0 and cards[mid-1] == query:
+            return "left"
+        else: 
+            return "found"
+    elif mid_number < query:
+        return "left"
+    else: 
+        return "right"
+
+def locate_card(cards, query):
+    lo, hi = 0, len(cards) - 1
+
+    while lo <= hi:
+        # this will return a whole integer instead of a floating point number
+        print("lo:", lo, ", hit:", hi)
+        mid = (lo + hi) // 2
+        result = test_location(cards, query, mid)
+        
+        if result == 'found':
+            return mid
+        elif result == 'left':
+            hi = mid -1
+        elif result == 'right':
+            lo = mid + 1
+
+    return -1
+
+result = locate_card(test['input']['cards'], test['input']['query'])
+print(result == test['output'])
+
+evaluate_test_cases(locate_card, tests)
